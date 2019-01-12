@@ -610,6 +610,7 @@ class Connection {
         public void run() {
             while (!shutdown) {
                 synchronized (this) {
+                    log.info("[PoolClusterStatusThread] updateSystemStatus");
                     updateSystemStatus(false, false);
                 }
             }
@@ -624,6 +625,7 @@ class Connection {
             }
 
             try {
+                log.info("[PoolClusterStatusThread] begin to fetch system status");
                 fetchSystemStatus(leaderUrl);
                 connectionClose = false;
             } catch (IOException e) {

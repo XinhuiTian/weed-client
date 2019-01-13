@@ -608,7 +608,9 @@ class Connection {
 
         @Override
         public void run() {
+            log.info("[PoolClusterStatusThread] Start to run");
             while (!shutdown) {
+                log.info("[PoolClusterStatusThread] in while loop");
                 synchronized (this) {
                     log.info("[PoolClusterStatusThread] updateSystemStatus");
                     updateSystemStatus(false, false);

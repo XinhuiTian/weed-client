@@ -430,6 +430,8 @@ class Connection {
             throw new SeaweedfsException("not found seaweedfs core leader");
         }
 
+        log.info("[fetchSystemClusterStatus] Get leader [" + leader.getUrl() + "]");
+
         peers = new ArrayList<>();
 
         if (map.get("Peers") != null) {
@@ -437,6 +439,7 @@ class Connection {
             for (String url : rawPeerList) {
                 MasterStatus peer = new MasterStatus(url);
                 peers.add(peer);
+                log.info("[fetchSystemClusterStatus] Get peer [" + peer.getUrl() + "]");
             }
         }
 
@@ -669,6 +672,8 @@ class Connection {
         private void fetchSystemStatus(String url) throws IOException {
             systemClusterStatus = fetchSystemClusterStatus(url);
             systemTopologyStatus = fetchSystemTopologyStatus(url);
+            log.info("[fetchSystemStatus] current leader url is {" + leaderUrl + "},"
+                    + " get leader url is {" + systemClusterStatus.getLeader().getUrl() + "}");
             if (!leaderUrl.equals(systemClusterStatus.getLeader().getUrl())) {
                 leaderUrl = (systemClusterStatus.getLeader().getUrl());
                 log.info("seaweedfs core leader is change to [" + leaderUrl + "]");
